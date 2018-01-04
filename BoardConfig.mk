@@ -36,7 +36,7 @@ TARGET_KERNEL_CONFIG := twrp_cheryl_defconfig
 TARGET_PREBUILT_KERNEL := $(DEVICE_TREE)/Image.gz-dtb
 
 # Boot image
-BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 user_debug=31 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 sched_enable_hmp=1 sched_enable_power_aware=1 androidboot.hardware=cheryl androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 user_debug=31 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 sched_enable_hmp=1 sched_enable_power_aware=1 androidboot.hardware=qcom androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x00000100
@@ -55,9 +55,9 @@ TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
 # A/B device flags
-TARGET_NO_RECOVERY := true
-BOARD_USES_RECOVERY_AS_BOOT := true
-BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
+#TARGET_NO_RECOVERY := true
+#BOARD_USES_RECOVERY_AS_BOOT := true
+#BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
 AB_OTA_UPDATER := true
 
 # TWRP specific build flags
@@ -72,6 +72,9 @@ TW_DEFAULT_BRIGHTNESS := 158
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_INCLUDE_NTFS_3G := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
+BOARD_SUPPRESS_SECURE_ERASE := true
+# Stock kernel sometimes crashes when we toggle MTP
+TW_EXCLUDE_MTP := true
 
 # We can use the factory reset button combo to enter recovery safely
 TW_IGNORE_MISC_WIPE_DATA := true
@@ -81,7 +84,7 @@ TW_NO_EXFAT_FUSE := true
 
 # Encryption support
 TW_INCLUDE_CRYPTO := true
-#TARGET_HW_DISK_ENCRYPTION := true
+TARGET_HW_DISK_ENCRYPTION := true
 #TARGET_KEYMASTER_WAIT_FOR_QSEE := true
 
 # Asian region languages
@@ -89,3 +92,4 @@ TW_EXTRA_LANGUAGES := true
 
 # Debug flags
 #TWRP_INCLUDE_LOGCAT := true
+TARGET_USES_LOGD := true

@@ -5,6 +5,13 @@ on init
     chmod 0664 /dev/ion
     chown system system /dev/ion
 
+service copyQSEEComAPI /sbin/copyQSEEComAPI.sh
+    oneshot
+    disabled
+    user root
+    group root
+    seclabel u:r:recovery:s0
+
 service qseecomd /sbin/qseecomd
     oneshot
     disabled
@@ -12,8 +19,11 @@ service qseecomd /sbin/qseecomd
     group root
     seclabel u:r:recovery:s0
 
-#on property:ro.crypto.state=encrypted
-#    start qseecomd
+on property:ro.crypto.state=encrypted
+    start copyQSEEComAPI
+
+on property:crypto.ready=1
+    start qseecomd
 
 on boot
     # save battery by switching to interactive once booted
